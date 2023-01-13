@@ -21,7 +21,7 @@ public class LoginServlet extends HttpServlet {
         if (session == null || session.getAttribute("user") == null) {
             req.getRequestDispatcher("login.jsp").forward(req, resp);
         } else {
-            req.getRequestDispatcher("user/hello.jsp").forward(req, resp);
+            req.getRequestDispatcher("/user/hello.jsp").forward(req, resp);
         }
     }
 
@@ -31,11 +31,12 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         List<String> usersList = Users.getInstance().getUsers();
-        if (usersList.contains(login) && !password.isEmpty()) {
-            HttpSession session = req.getSession();
-            session.setAttribute("user", login);
-
-            req.getRequestDispatcher("user/hello.jsp").forward(req, resp);
+        if (login != null && password != null && !login.isEmpty() && !password.isEmpty()) {
+            if (usersList.contains(login)) {
+                HttpSession session = req.getSession();
+                session.setAttribute("user", login);
+                req.getRequestDispatcher("/user/hello.jsp").forward(req, resp);
+            }
         } else {
             req.getRequestDispatcher("login.jsp").forward(req, resp);
         }
