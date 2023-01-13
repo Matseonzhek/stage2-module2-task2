@@ -18,10 +18,10 @@ public class AuthFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpServletRequest.getSession(false);
 
-        if (session != null && session.getAttribute("user") != null) {
-            filterChain.doFilter(servletRequest, servletResponse);
-        } else {
+        if (session == null || session.getAttribute("user") == null) {
             servletRequest.getRequestDispatcher("/login.jsp").include(servletRequest, servletResponse);
+        } else {
+            filterChain.doFilter(servletRequest, servletResponse);
         }
 
     }
