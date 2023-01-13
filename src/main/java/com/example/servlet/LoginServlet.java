@@ -16,12 +16,12 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession(false);
+        HttpSession session = req.getSession();
 
         if (session == null || session.getAttribute("user") == null) {
-            resp.sendRedirect("login.jsp");
+            resp.sendRedirect("/login.jsp");
         } else {
-            resp.sendRedirect("user/hello.jsp");
+            resp.sendRedirect("/user/hello.jsp");
         }
     }
 
@@ -35,10 +35,10 @@ public class LoginServlet extends HttpServlet {
             if (usersList.contains(login)) {
                 HttpSession session = req.getSession();
                 session.setAttribute("user", login);
-                resp.sendRedirect("user/hello.jsp");
+                resp.sendRedirect("/user/hello.jsp");
             }
         } else {
-            req.getRequestDispatcher("login.jsp").forward(req, resp);
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
         }
     }
 }
